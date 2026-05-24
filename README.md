@@ -2,6 +2,8 @@
 
 FloraVision AI is a Streamlit website that lets a user upload a flora photo, preview it, identify the likely species, and save previous searches in SQLite.
 
+Live app: https://floravisionai.streamlit.app/
+
 ## Chosen Stack
 
 - Frontend and web app: Streamlit
