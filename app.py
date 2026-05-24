@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import sys
+import logging
 from html import escape
 from io import BytesIO
 from pathlib import Path
@@ -21,6 +22,36 @@ from floravision.styles import page_css
 
 
 settings = get_settings()
+logger = logging.getLogger(__name__)
+MAX_UPLOAD_BYTES = 12 * 1024 * 1024
+MIN_IMAGE_SIDE = 64
+
+CAPABILITY_ITEMS = [
+    "Leaves",
+    "Flowers",
+    "Trees",
+    "Mushrooms",
+    "Fungi",
+    "Moss",
+    "Grass",
+    "Shrubs",
+    "Vines",
+    "Fruits",
+    "Seeds",
+    "Cacti",
+    "Succulents",
+    "Aquatic plants",
+]
+
+NOT_ALLOWED_ITEMS = [
+    "people",
+    "animals",
+    "vehicles",
+    "buildings",
+    "screenshots",
+    "prepared food",
+    "household objects",
+]
 
 
 def h(value: object) -> str:
@@ -67,15 +98,18 @@ def identify_page() -> None:
         """
         <div class="fv-header">
           <h1 class="fv-title">FloraVision AI</h1>
-          <p class="fv-subtitle">Upload a flora photo to identify the closest catalog match with an open-source vision model.</p>
+          <p class="fv-subtitle">Upload a flora photo to identify the closest catalog match with an open-source vision model. Only flora images are allowed.</p>
         </div>
         """,
         unsafe_allow_html=True,
     )
 
+    render_capabilities()
+
     upload_col, result_col = st.columns([0.92, 1.08], gap="large")
 
     with upload_col:
+        render_upload_rules()
         uploaded = st.file_uploader(
             "Drag and drop image",
             type=["jpg", "jpeg", "png", "webp"],
@@ -85,20 +119,40 @@ def identify_page() -> None:
 
         image = None
         image_bytes = None
+        upload_error = None
         if uploaded is not None:
             image_bytes = uploaded.getvalue()
-            try:
-                image = Image.open(BytesIO(image_bytes)).convert("RGB")
-            except UnidentifiedImageError:
-                st.error("That file could not be read as an image.")
+            upload_error = validate_upload(image_bytes, uploaded.name)
+            if upload_error is None:
+                try:
+                    image = Image.open(BytesIO(image_bytes)).convert("RGB")
+                    if min(image.size) < MIN_IMAGE_SIDE:
+                        upload_error = "Please upload a larger image. The shortest side must be at least 64 pixels."
+                        image = None
+                except (UnidentifiedImageError, OSError, ValueError):
+                    upload_error = "That file could not be read as an image. Please upload a JPG, PNG, or WebP photo."
+
+        if upload_error:
+            st.session_state["last_result"] = ui_error_result("Upload blocked", upload_error)
+            render_inline_error(upload_error)
 
         if image is not None:
             st.image(image, caption=uploaded.name, use_container_width=True)
             if st.button("Identify flora", type="primary", use_container_width=True):
                 with st.spinner("Analyzing flora image..."):
-                    result = get_identifier().identify(image)
-                    save_search(settings.db_path, image_bytes or b"", uploaded.name, result)
-                    st.session_state["last_result"] = result
+                    try:
+                        result = get_identifier().identify(image)
+                        if result["status"] == "rejected_non_flora":
+                            st.session_state["last_result"] = result
+                        else:
+                            save_search(settings.db_path, image_bytes or b"", uploaded.name, result)
+                            st.session_state["last_result"] = result
+                    except Exception:
+                        logger.exception("Flora identification failed")
+                        st.session_state["last_result"] = ui_error_result(
+                            "Identification failed",
+                            "Something went wrong while analyzing the image. Please try a different clear flora photo.",
+                        )
         else:
             st.markdown(
                 """
@@ -118,7 +172,74 @@ def identify_page() -> None:
             render_empty_result()
 
 
+def validate_upload(image_bytes: bytes, image_name: str) -> str | None:
+    if not image_bytes:
+        return "The upload was empty. Please choose a JPG, PNG, or WebP image."
+    if len(image_bytes) > MAX_UPLOAD_BYTES:
+        return "Please upload an image under 12MB so the app can analyze it reliably."
+    suffix = Path(image_name).suffix.lower()
+    if suffix not in {".jpg", ".jpeg", ".png", ".webp"}:
+        return "Unsupported file type. Please upload a JPG, PNG, or WebP image."
+    return None
+
+
+def ui_error_result(title: str, message: str) -> dict:
+    return {
+        "status": "error",
+        "title": title,
+        "message": message,
+        "safety_disclaimer": REQUIRED_DISCLAIMER,
+    }
+
+
+def render_capabilities() -> None:
+    pills = "".join(f'<span class="fv-capability">{h(item)}</span>' for item in CAPABILITY_ITEMS)
+    not_allowed = ", ".join(NOT_ALLOWED_ITEMS)
+    st.markdown(
+        f"""
+        <div class="fv-capability-panel">
+          <div>
+            <div class="fv-label">What the AI can identify</div>
+            <div class="fv-capability-grid">{pills}</div>
+          </div>
+          <div class="fv-rule-card">
+            <div class="fv-label">Upload rule</div>
+            <p>Use clear flora photos only. Non-flora images are not allowed: {h(not_allowed)}.</p>
+          </div>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_upload_rules() -> None:
+    st.markdown(
+        """
+        <div class="fv-upload-hint">
+          <div class="fv-label">Best results</div>
+          <p>Center the plant, fungus, leaf, flower, fruit, seed, or moss in the frame. Avoid people, pets, documents, and unrelated objects.</p>
+        </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_inline_error(message: str) -> None:
+    st.markdown(
+        f'<div class="fv-error-card"><strong>Upload error</strong><br>{h(message)}</div>',
+        unsafe_allow_html=True,
+    )
+
+
 def render_result(result: dict) -> None:
+    if result["status"] == "error":
+        render_error_result(result)
+        return
+
+    if result["status"] == "rejected_non_flora":
+        render_rejection_result(result)
+        return
+
     if result["status"] == "low_confidence":
         st.markdown(
             f'<div class="fv-warning">{h(result["low_confidence_message"])}</div>',
@@ -182,6 +303,45 @@ def render_result(result: dict) -> None:
           <strong>Model:</strong> {h(result["model_used"])}<br>
           {h(result["model_note"])}
         </div>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+def render_rejection_result(result: dict) -> None:
+    st.markdown(
+        f"""
+        <div class="fv-error-card">
+          <div class="fv-label">Image not allowed</div>
+          <div class="fv-value">Non-flora upload rejected</div>
+          <p>{h(result["rejection_message"])}</p>
+        </div>
+        <div class="fv-grid">
+          <div class="fv-metric">
+            <div class="fv-label">Flora likelihood</div>
+            <div class="fv-value">{h(result["confidence_percent"])}</div>
+          </div>
+          <div class="fv-metric">
+            <div class="fv-label">Validation</div>
+            <div class="fv-value">{h(result["validation_method"].replace("-", " ").title())}</div>
+          </div>
+        </div>
+        <div class="fv-note">{h(result["safety_disclaimer"])}</div>
+        """,
+        unsafe_allow_html=True,
+    )
+    render_pills("Try uploading", result["fun_facts"])
+
+
+def render_error_result(result: dict) -> None:
+    st.markdown(
+        f"""
+        <div class="fv-error-card">
+          <div class="fv-label">{h(result["title"])}</div>
+          <div class="fv-value">Could not analyze image</div>
+          <p>{h(result["message"])}</p>
+        </div>
+        <div class="fv-note">{h(result["safety_disclaimer"])}</div>
         """,
         unsafe_allow_html=True,
     )

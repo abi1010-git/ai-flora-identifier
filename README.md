@@ -126,6 +126,7 @@ Copy `.env.example` if you want local overrides. No API key is required.
 FLORAVISION_DB_PATH=data/floravision.sqlite3
 FLORAVISION_MODEL_ID=openai/clip-vit-base-patch32
 FLORAVISION_CONFIDENCE_THRESHOLD=0.17
+FLORAVISION_FLORA_GATE_THRESHOLD=0.45
 ```
 
 ## Safety Rules
@@ -140,6 +141,8 @@ If confidence is low, the app says:
 
 It does not guarantee that any plant, mushroom, fruit, seed, or fungus is safe to eat or non-toxic.
 
+The app also blocks likely non-flora uploads. People, animals, vehicles, buildings, screenshots, prepared food, and household objects are not supported inputs.
+
 ## Future Improvements
 
 - Expand the flora catalog with regional candidate lists.
@@ -148,4 +151,3 @@ It does not guarantee that any plant, mushroom, fruit, seed, or fungus is safe t
 - Store optional thumbnails after adding privacy controls.
 - Add user accounts and exportable search logs.
 - Add expert review workflow for low-confidence identifications.
-

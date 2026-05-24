@@ -88,7 +88,7 @@ def page_css(mode: str) -> str:
     .fv-header {{
         border-bottom: 1px solid var(--fv-border);
         padding: 0.25rem 0 1rem 0;
-        margin-bottom: 1.25rem;
+        margin-bottom: 1rem;
     }}
 
     .fv-title {{
@@ -113,6 +113,53 @@ def page_css(mode: str) -> str:
         border-radius: 8px;
         padding: 1rem;
         margin-bottom: 0.8rem;
+    }}
+
+    .fv-capability-panel {{
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(230px, 0.54fr);
+        gap: 0.85rem;
+        align-items: stretch;
+        margin: 0 0 1.2rem 0;
+    }}
+
+    .fv-capability-panel > div,
+    .fv-upload-hint {{
+        background: var(--fv-panel);
+        border: 1px solid var(--fv-border);
+        border-radius: 8px;
+        padding: 0.9rem 1rem;
+    }}
+
+    .fv-capability-grid {{
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.45rem;
+        margin-top: 0.55rem;
+    }}
+
+    .fv-capability {{
+        background: var(--fv-panel-alt);
+        border: 1px solid var(--fv-border);
+        border-radius: 999px;
+        color: var(--fv-text);
+        display: inline-flex;
+        align-items: center;
+        min-height: 2rem;
+        padding: 0.24rem 0.62rem;
+        font-size: 0.9rem;
+        font-weight: 680;
+    }}
+
+    .fv-rule-card {{
+        border-left: 4px solid var(--fv-accent) !important;
+    }}
+
+    .fv-rule-card p,
+    .fv-upload-hint p {{
+        color: var(--fv-muted);
+        margin: 0.35rem 0 0 0;
+        line-height: 1.45;
     }}
 
     .fv-card-accent {{
@@ -160,6 +207,22 @@ def page_css(mode: str) -> str:
         border-radius: 8px;
         padding: 0.9rem 1rem;
         margin: 0.8rem 0;
+    }}
+
+    .fv-error-card {{
+        background: color-mix(in srgb, var(--fv-danger) 14%, var(--fv-panel));
+        border: 1px solid color-mix(in srgb, var(--fv-danger) 52%, var(--fv-border));
+        border-left: 4px solid var(--fv-danger);
+        color: var(--fv-text);
+        border-radius: 8px;
+        padding: 1rem;
+        margin: 0.8rem 0;
+    }}
+
+    .fv-error-card p {{
+        color: var(--fv-muted);
+        margin: 0.45rem 0 0 0;
+        line-height: 1.48;
     }}
 
     .fv-note {{
@@ -247,6 +310,16 @@ def page_css(mode: str) -> str:
     .stFileUploader section {{
         border-radius: 8px;
         border-color: var(--fv-border);
+    }}
+
+    @media (max-width: 780px) {{
+        .block-container {{
+            padding-top: 2.5rem;
+        }}
+
+        .fv-capability-panel {{
+            grid-template-columns: 1fr;
+        }}
     }}
     </style>
     """

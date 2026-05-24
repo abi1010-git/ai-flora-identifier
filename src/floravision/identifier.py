@@ -26,6 +26,42 @@ class SpeciesScore:
     score: float
 
 
+@dataclass(frozen=True)
+class FloraGateResult:
+    is_flora: bool
+    flora_probability: float
+    top_prompt: str
+    method: str
+
+
+FLORA_GATE_PROMPTS = [
+    "a close-up photo of a leaf",
+    "a close-up photo of a flower",
+    "a photo of a tree or woody plant",
+    "a photo of a mushroom or fungus",
+    "a photo of moss, grass, or groundcover",
+    "a photo of a cactus or succulent",
+    "a photo of fruit, seeds, cones, or berries growing from a plant",
+    "a photo of an aquatic plant",
+]
+
+NON_FLORA_GATE_PROMPTS = [
+    "a photo of a person",
+    "a photo of an animal",
+    "a photo of a vehicle",
+    "a photo of a building or room",
+    "a screenshot, document, chart, or user interface",
+    "a photo of a household object",
+    "a plate of prepared food",
+    "an abstract image with no plant, fungus, moss, leaf, flower, seed, or tree",
+]
+
+NON_FLORA_REJECTION_MESSAGE = (
+    "Only flora images are allowed. Non-flora images, including people, animals, "
+    "vehicles, buildings, screenshots, prepared food, and household objects, are not allowed."
+)
+
+
 class FloraIdentifier:
     def __init__(self, settings: Settings | None = None, species: list[FloraSpecies] | None = None):
         self.settings = settings or get_settings()
@@ -37,26 +73,46 @@ class FloraIdentifier:
     def identify(self, image: Image.Image) -> dict[str, Any]:
         rgb_image = image.convert("RGB")
         try:
-            scores = self._identify_with_clip(rgb_image)
+            gate, scores = self._identify_with_clip(rgb_image)
             model_used = self.settings.model_id
             note = "Open-source CLIP zero-shot image matching."
         except ModelUnavailableError as exc:
-            scores = self._identify_with_local_fallback(rgb_image)
+            features = _image_features(rgb_image)
+            gate = _local_flora_gate(features)
+            scores = self._identify_with_local_fallback(rgb_image, features)
             model_used = "local-color-texture-fallback"
             note = (
                 "CLIP dependencies are not installed or the model could not load, "
                 f"so a local fallback was used: {exc}"
             )
-        return self._build_result(scores, model_used=model_used, model_note=note)
+        if not gate.is_flora:
+            return self._build_rejection_result(gate, model_used=model_used, model_note=note)
+        return self._build_result(scores, gate=gate, model_used=model_used, model_note=note)
 
-    def _identify_with_clip(self, image: Image.Image) -> list[SpeciesScore]:
+    def _identify_with_clip(self, image: Image.Image) -> tuple[FloraGateResult, list[SpeciesScore]]:
         self._load_clip()
+        gate = self._clip_flora_gate(image)
         prompts = [item.prompt() for item in self.species]
         inputs = self._clip_processor(text=prompts, images=image, return_tensors="pt", padding=True)
         with self._torch.no_grad():
             outputs = self._clip_model(**inputs)
             probabilities = outputs.logits_per_image.softmax(dim=1).cpu().numpy()[0]
-        return self._scores_from_probabilities(probabilities)
+        return gate, self._scores_from_probabilities(probabilities)
+
+    def _clip_flora_gate(self, image: Image.Image) -> FloraGateResult:
+        prompts = [*FLORA_GATE_PROMPTS, *NON_FLORA_GATE_PROMPTS]
+        inputs = self._clip_processor(text=prompts, images=image, return_tensors="pt", padding=True)
+        with self._torch.no_grad():
+            outputs = self._clip_model(**inputs)
+            probabilities = outputs.logits_per_image.softmax(dim=1).cpu().numpy()[0]
+        flora_probability = float(probabilities[: len(FLORA_GATE_PROMPTS)].sum())
+        top_prompt = prompts[int(np.argmax(probabilities))]
+        return FloraGateResult(
+            is_flora=flora_probability >= self.settings.flora_gate_threshold,
+            flora_probability=round(flora_probability, 4),
+            top_prompt=top_prompt,
+            method="clip-flora-gate",
+        )
 
     def _load_clip(self) -> None:
         if self._clip_model is not None and self._clip_processor is not None:
@@ -73,8 +129,12 @@ class FloraIdentifier:
         except Exception as exc:  # pragma: no cover - depends on model download
             raise ModelUnavailableError(str(exc)) from exc
 
-    def _identify_with_local_fallback(self, image: Image.Image) -> list[SpeciesScore]:
-        features = _image_features(image)
+    def _identify_with_local_fallback(
+        self,
+        image: Image.Image,
+        features: dict[str, float] | None = None,
+    ) -> list[SpeciesScore]:
+        features = features or _image_features(image)
         raw_scores = []
         for item in self.species:
             raw_scores.append(_fallback_species_score(item, features))
@@ -91,6 +151,7 @@ class FloraIdentifier:
     def _build_result(
         self,
         scores: list[SpeciesScore],
+        gate: FloraGateResult,
         model_used: str,
         model_note: str,
     ) -> dict[str, Any]:
@@ -121,6 +182,44 @@ class FloraIdentifier:
             "habitat": species.habitat,
             "regions": species.regions,
             "similar_species": similar,
+            "flora_probability": gate.flora_probability,
+            "validation_method": gate.method,
+            "validation_prompt": gate.top_prompt,
+            "model_used": model_used,
+            "model_note": model_note,
+            "safety_disclaimer": REQUIRED_DISCLAIMER,
+            "consumption_warning": CONSUMPTION_WARNING,
+        }
+
+    def _build_rejection_result(
+        self,
+        gate: FloraGateResult,
+        model_used: str,
+        model_note: str,
+    ) -> dict[str, Any]:
+        confidence = round(gate.flora_probability, 4)
+        return {
+            "status": "rejected_non_flora",
+            "low_confidence_message": None,
+            "common_name": "Unsupported image",
+            "scientific_name": "Not applicable",
+            "category": "non-flora image",
+            "confidence": confidence,
+            "confidence_percent": f"{confidence * 100:.1f}%",
+            "summary": NON_FLORA_REJECTION_MESSAGE,
+            "fun_facts": [
+                "Try a clear, well-lit photo of a leaf, flower, tree, mushroom, moss, cactus, fruit, or seed.",
+                "Close-up images with the plant or fungus filling most of the frame work best.",
+            ],
+            "toxicity_note": "No toxicity assessment was made because the upload was rejected.",
+            "origin": "No plant or fungus source identified.",
+            "habitat": "Not applicable.",
+            "regions": [],
+            "similar_species": [],
+            "flora_probability": confidence,
+            "validation_method": gate.method,
+            "validation_prompt": gate.top_prompt,
+            "rejection_message": NON_FLORA_REJECTION_MESSAGE,
             "model_used": model_used,
             "model_note": model_note,
             "safety_disclaimer": REQUIRED_DISCLAIMER,
@@ -181,8 +280,26 @@ def _fallback_species_score(species: FloraSpecies, features: dict[str, float]) -
     return score
 
 
+def _local_flora_gate(features: dict[str, float]) -> FloraGateResult:
+    flora_probability = min(
+        0.98,
+        (
+            features["green_ratio"] * 1.75
+            + features["warm_ratio"] * 0.45
+            + features["saturation"] * 0.85
+            + features["edge_intensity"] * 0.55
+        ),
+    )
+    top_prompt = "local color and texture flora signal"
+    return FloraGateResult(
+        is_flora=flora_probability >= 0.14,
+        flora_probability=round(float(flora_probability), 4),
+        top_prompt=top_prompt,
+        method="local-flora-gate",
+    )
+
+
 def _softmax(values: np.ndarray) -> np.ndarray:
     shifted = values - np.max(values)
     exp_values = np.exp(shifted)
     return exp_values / exp_values.sum()
-
