@@ -1,0 +1,411 @@
+[
+  {
+    "id": "sugar_maple_leaf",
+    "common_name": "Sugar maple leaf",
+    "scientific_name": "Acer saccharum",
+    "category": "leaf",
+    "summary": "A lobed deciduous tree leaf often known for bright autumn color.",
+    "fun_facts": [
+      "Sugar maple sap is boiled down to make maple syrup.",
+      "The leaves usually have five main lobes."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Wilted maple leaves can be hazardous to some animals.",
+    "origin": "Sugar maple tree",
+    "habitat": "Cool deciduous forests, parks, and mature yards.",
+    "regions": ["Eastern Canada", "Northeastern United States", "Great Lakes region"],
+    "similar_species": ["Red maple", "Norway maple", "Silver maple"],
+    "prompt_terms": ["lobed leaf", "autumn leaf", "maple tree leaf"]
+  },
+  {
+    "id": "white_oak",
+    "common_name": "White oak",
+    "scientific_name": "Quercus alba",
+    "category": "tree",
+    "summary": "A long-lived oak with rounded leaf lobes and acorns.",
+    "fun_facts": [
+      "White oak wood is valued for barrels and furniture.",
+      "Mature trees can support many insects and birds."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Acorns and leaves contain tannins that may irritate people or animals.",
+    "origin": "White oak tree",
+    "habitat": "Dry upland forests, mixed woods, and open savannas.",
+    "regions": ["Eastern United States", "Southeastern Canada"],
+    "similar_species": ["Bur oak", "Swamp white oak", "Post oak"],
+    "prompt_terms": ["oak tree", "rounded oak leaf", "acorns"]
+  },
+  {
+    "id": "dandelion",
+    "common_name": "Common dandelion",
+    "scientific_name": "Taraxacum officinale",
+    "category": "flower",
+    "summary": "A low-growing plant with yellow composite flowers and puffball seed heads.",
+    "fun_facts": [
+      "The seed head acts like a tiny parachute system.",
+      "Dandelions can bloom repeatedly through the growing season."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Some people may react to the sap or to contaminated plants.",
+    "origin": "Common dandelion plant",
+    "habitat": "Lawns, meadows, sidewalks, gardens, and disturbed soil.",
+    "regions": ["North America", "Europe", "Asia", "Temperate regions worldwide"],
+    "similar_species": ["Cat's ear", "Hawkweed", "Sow thistle"],
+    "prompt_terms": ["yellow flower", "seed puff", "rosette leaves"]
+  },
+  {
+    "id": "sunflower",
+    "common_name": "Sunflower",
+    "scientific_name": "Helianthus annuus",
+    "category": "flower",
+    "summary": "A tall annual with a large composite flower head and broad leaves.",
+    "fun_facts": [
+      "The flower head is made of many smaller florets.",
+      "Young flower heads can track the sun before flowering."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Plant parts can cause reactions in sensitive people or animals.",
+    "origin": "Annual sunflower plant",
+    "habitat": "Open fields, gardens, roadsides, and disturbed soil.",
+    "regions": ["North America", "Europe", "Asia", "Cultivated worldwide"],
+    "similar_species": ["Black-eyed Susan", "Jerusalem artichoke", "Oxeye sunflower"],
+    "prompt_terms": ["large yellow flower", "brown center", "tall plant"]
+  },
+  {
+    "id": "rose",
+    "common_name": "Garden rose",
+    "scientific_name": "Rosa species",
+    "category": "shrub",
+    "summary": "A woody flowering shrub with layered petals and often thorny stems.",
+    "fun_facts": [
+      "Rose hips are the fruit of rose plants.",
+      "There are thousands of cultivated rose varieties."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Thorns can puncture skin and treated garden plants may carry chemicals.",
+    "origin": "Rose shrub",
+    "habitat": "Gardens, hedges, woodland edges, and sunny shrub borders.",
+    "regions": ["Temperate regions worldwide", "Asia", "Europe", "North America"],
+    "similar_species": ["Camellia", "Peony", "Wild rose"],
+    "prompt_terms": ["layered petals", "thorny stem", "rose flower"]
+  },
+  {
+    "id": "lavender",
+    "common_name": "Lavender",
+    "scientific_name": "Lavandula angustifolia",
+    "category": "flower",
+    "summary": "A fragrant shrubby herb with narrow leaves and purple flower spikes.",
+    "fun_facts": [
+      "Lavender oil is widely used in fragrance products.",
+      "The plant prefers sunny, well-drained sites."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Concentrated oils and plant parts can bother pets or sensitive people.",
+    "origin": "Lavender shrub",
+    "habitat": "Sunny gardens, dry slopes, herb beds, and Mediterranean-style landscapes.",
+    "regions": ["Mediterranean region", "Europe", "North America", "Cultivated worldwide"],
+    "similar_species": ["Russian sage", "Catmint", "Hyssop"],
+    "prompt_terms": ["purple flower spikes", "narrow gray leaves", "herb plant"]
+  },
+  {
+    "id": "white_button_mushroom",
+    "common_name": "Button mushroom",
+    "scientific_name": "Agaricus bisporus",
+    "category": "mushroom",
+    "summary": "A small pale mushroom with a rounded cap and gills underneath.",
+    "fun_facts": [
+      "Cremini and portobello mushrooms are mature forms of the same species.",
+      "Wild Agaricus species can be difficult to separate by sight."
+    ],
+    "toxicity_note": "Do not eat mushrooms identified by this app. Mushroom lookalikes may be hazardous or deadly.",
+    "origin": "Fruiting body of a fungus",
+    "habitat": "Cultivated beds, compost-rich soils, lawns, and grassy areas.",
+    "regions": ["Cultivated worldwide", "Temperate regions"],
+    "similar_species": ["Destroying angel", "Yellow-staining mushroom", "Field mushroom"],
+    "prompt_terms": ["white mushroom", "round cap", "gills"]
+  },
+  {
+    "id": "fly_agaric",
+    "common_name": "Fly agaric",
+    "scientific_name": "Amanita muscaria",
+    "category": "fungus",
+    "summary": "A striking mushroom often showing a red cap with pale warts.",
+    "fun_facts": [
+      "It forms partnerships with tree roots.",
+      "Cap color can vary from red to orange or yellowish."
+    ],
+    "toxicity_note": "Do not eat mushrooms identified by this app. This mushroom can contain psychoactive and toxic compounds.",
+    "origin": "Fruiting body of a mycorrhizal fungus",
+    "habitat": "Woodlands and forest edges near birch, pine, spruce, and other trees.",
+    "regions": ["Northern Hemisphere", "Introduced in parts of the Southern Hemisphere"],
+    "similar_species": ["Caesar's mushroom", "Blusher", "Other Amanita species"],
+    "prompt_terms": ["red mushroom", "white spots", "amanita"]
+  },
+  {
+    "id": "chanterelle",
+    "common_name": "Chanterelle",
+    "scientific_name": "Cantharellus species",
+    "category": "mushroom",
+    "summary": "A golden funnel-shaped mushroom group with ridges that can resemble gills.",
+    "fun_facts": [
+      "Many chanterelles grow in partnership with trees.",
+      "False chanterelles can look similar in casual photos."
+    ],
+    "toxicity_note": "Do not eat mushrooms identified by this app. Similar-looking mushrooms can be harmful.",
+    "origin": "Fruiting body of a fungus",
+    "habitat": "Mossy forests, hardwood stands, conifer woods, and damp woodland floors.",
+    "regions": ["North America", "Europe", "Asia", "Temperate forests"],
+    "similar_species": ["False chanterelle", "Jack-o'-lantern mushroom", "Hedgehog mushroom"],
+    "prompt_terms": ["golden mushroom", "funnel cap", "forest floor"]
+  },
+  {
+    "id": "sphagnum_moss",
+    "common_name": "Sphagnum moss",
+    "scientific_name": "Sphagnum species",
+    "category": "moss",
+    "summary": "A soft moss group that forms dense mats in bogs and wetlands.",
+    "fun_facts": [
+      "Sphagnum can hold many times its weight in water.",
+      "Accumulated sphagnum material can become peat."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Wetland moss can host microbes or environmental contaminants.",
+    "origin": "Moss plant",
+    "habitat": "Bogs, fens, wet forests, seepage slopes, and acidic wetlands.",
+    "regions": ["Boreal regions", "Temperate wetlands", "Northern Hemisphere"],
+    "similar_species": ["Haircap moss", "Feather moss", "Club moss"],
+    "prompt_terms": ["green moss", "wetland mat", "soft moss"]
+  },
+  {
+    "id": "kentucky_bluegrass",
+    "common_name": "Kentucky bluegrass",
+    "scientific_name": "Poa pratensis",
+    "category": "grass",
+    "summary": "A fine-textured turf grass that forms dense lawns and meadows.",
+    "fun_facts": [
+      "It spreads by underground rhizomes.",
+      "Its seed head has a loose pyramid shape."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Lawn grasses may be treated with chemicals.",
+    "origin": "Perennial grass plant",
+    "habitat": "Lawns, pastures, meadows, roadsides, and open fields.",
+    "regions": ["North America", "Europe", "Temperate regions worldwide"],
+    "similar_species": ["Ryegrass", "Fescue", "Annual bluegrass"],
+    "prompt_terms": ["green grass", "turf", "thin blades"]
+  },
+  {
+    "id": "blackberry",
+    "common_name": "Blackberry",
+    "scientific_name": "Rubus species",
+    "category": "fruit",
+    "summary": "A bramble fruit made of clustered drupelets on thorny canes.",
+    "fun_facts": [
+      "Blackberries are aggregates of many tiny fruits.",
+      "Many species spread quickly through canes and seeds."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Wild berries can have dangerous lookalikes or contamination.",
+    "origin": "Blackberry bramble",
+    "habitat": "Hedgerows, woodland edges, fields, disturbed sites, and sunny thickets.",
+    "regions": ["North America", "Europe", "Asia", "Temperate regions"],
+    "similar_species": ["Black raspberry", "Dewberry", "Mulberry"],
+    "prompt_terms": ["black berries", "bramble", "clustered fruit"]
+  },
+  {
+    "id": "poison_ivy",
+    "common_name": "Poison ivy",
+    "scientific_name": "Toxicodendron radicans",
+    "category": "vine",
+    "summary": "A climbing or trailing plant with three leaflets that can cause skin irritation.",
+    "fun_facts": [
+      "The irritating oil can persist on tools and clothing.",
+      "It can grow as a vine, shrub, or groundcover."
+    ],
+    "toxicity_note": "Avoid touching suspected poison ivy. It can cause serious skin reactions in many people.",
+    "origin": "Poison ivy vine or shrub",
+    "habitat": "Woodland edges, trails, fences, yards, and disturbed ground.",
+    "regions": ["Eastern North America", "Central North America"],
+    "similar_species": ["Virginia creeper", "Box elder seedlings", "Fragrant sumac"],
+    "prompt_terms": ["three leaflets", "climbing vine", "glossy leaves"]
+  },
+  {
+    "id": "aloe_vera",
+    "common_name": "Aloe vera",
+    "scientific_name": "Aloe vera",
+    "category": "succulent",
+    "summary": "A fleshy rosette-forming succulent with thick lance-shaped leaves.",
+    "fun_facts": [
+      "Aloe leaves store water in gel-filled tissue.",
+      "It is commonly grown as a houseplant."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Aloe latex and plant parts can bother people and pets.",
+    "origin": "Aloe succulent plant",
+    "habitat": "Dry gardens, containers, sunny windows, and arid landscapes.",
+    "regions": ["Arabian Peninsula origin", "Cultivated worldwide", "Warm dry regions"],
+    "similar_species": ["Agave", "Haworthia", "Gasteria"],
+    "prompt_terms": ["succulent", "fleshy leaves", "rosette plant"]
+  },
+  {
+    "id": "prickly_pear",
+    "common_name": "Prickly pear cactus",
+    "scientific_name": "Opuntia species",
+    "category": "cactus",
+    "summary": "A cactus with flattened pads, spines, and sometimes colorful fruit.",
+    "fun_facts": [
+      "Tiny glochid spines can detach easily.",
+      "Many species have bright yellow, orange, or pink flowers."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Spines and glochids can injure skin, eyes, or pets.",
+    "origin": "Opuntia cactus",
+    "habitat": "Deserts, dry grasslands, rocky slopes, and xeric gardens.",
+    "regions": ["Americas", "Mediterranean region", "Warm dry regions worldwide"],
+    "similar_species": ["Cholla", "Beavertail cactus", "Dragon fruit cactus"],
+    "prompt_terms": ["cactus pads", "spines", "desert plant"]
+  },
+  {
+    "id": "lotus",
+    "common_name": "Sacred lotus",
+    "scientific_name": "Nelumbo nucifera",
+    "category": "aquatic plant",
+    "summary": "An aquatic plant with round leaves and large flowers held above the water.",
+    "fun_facts": [
+      "Lotus leaves are famous for repelling water.",
+      "The seed pods have a distinctive flat-topped shape."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Aquatic plants can absorb pollutants from water.",
+    "origin": "Lotus aquatic plant",
+    "habitat": "Ponds, lakes, slow wetlands, and cultivated water gardens.",
+    "regions": ["Asia", "Australia", "Cultivated worldwide"],
+    "similar_species": ["Water lily", "American lotus", "Spatterdock"],
+    "prompt_terms": ["aquatic flower", "round leaf", "pink lotus"]
+  },
+  {
+    "id": "cattail",
+    "common_name": "Broadleaf cattail",
+    "scientific_name": "Typha latifolia",
+    "category": "aquatic plant",
+    "summary": "A wetland plant with tall strap-like leaves and brown cylindrical flower spikes.",
+    "fun_facts": [
+      "Cattails help provide cover for wetland wildlife.",
+      "The fluffy seed material disperses on wind."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Wetland plants can accumulate pollutants.",
+    "origin": "Cattail wetland plant",
+    "habitat": "Marshes, pond edges, ditches, and shallow wetlands.",
+    "regions": ["North America", "Europe", "Asia", "Wetlands worldwide"],
+    "similar_species": ["Narrowleaf cattail", "Iris leaves", "Bulrush"],
+    "prompt_terms": ["brown cattail spike", "wetland reeds", "tall leaves"]
+  },
+  {
+    "id": "apple",
+    "common_name": "Apple",
+    "scientific_name": "Malus domestica",
+    "category": "fruit",
+    "summary": "A round tree fruit with smooth skin and a central core.",
+    "fun_facts": [
+      "Apple trees are commonly grafted to preserve varieties.",
+      "There are thousands of named apple cultivars."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Seeds contain compounds of concern and wild fruit can be contaminated.",
+    "origin": "Apple tree",
+    "habitat": "Orchards, gardens, temperate farms, and abandoned homesteads.",
+    "regions": ["Central Asian origin", "Temperate regions worldwide"],
+    "similar_species": ["Crabapple", "Pear", "Quince"],
+    "prompt_terms": ["round fruit", "apple tree", "red apple"]
+  },
+  {
+    "id": "pine_cone",
+    "common_name": "Pine cone",
+    "scientific_name": "Pinus species",
+    "category": "seed",
+    "summary": "A woody cone that protects and releases pine seeds.",
+    "fun_facts": [
+      "Many pine cones open and close with humidity.",
+      "Some species release seeds after fire."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Cones can carry sap, mold, insects, or environmental contaminants.",
+    "origin": "Pine tree",
+    "habitat": "Conifer forests, parks, mountains, sandy soils, and plantations.",
+    "regions": ["Northern Hemisphere", "Temperate and boreal regions"],
+    "similar_species": ["Spruce cone", "Fir cone", "Cedar cone"],
+    "prompt_terms": ["pine cone", "woody seed cone", "conifer"]
+  },
+  {
+    "id": "fern",
+    "common_name": "Boston fern",
+    "scientific_name": "Nephrolepis exaltata",
+    "category": "plant",
+    "summary": "A fern with arching fronds made of many small leaflets.",
+    "fun_facts": [
+      "Ferns reproduce with spores rather than flowers.",
+      "Boston fern is a common hanging houseplant."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Houseplants may be treated with chemicals or confused with irritating species.",
+    "origin": "Fern plant",
+    "habitat": "Humid forests, shaded gardens, containers, and indoor spaces.",
+    "regions": ["Tropical Americas", "Cultivated worldwide"],
+    "similar_species": ["Sword fern", "Bracken fern", "Maidenhair fern"],
+    "prompt_terms": ["fern fronds", "green leaflets", "houseplant"]
+  },
+  {
+    "id": "monstera",
+    "common_name": "Monstera",
+    "scientific_name": "Monstera deliciosa",
+    "category": "vine",
+    "summary": "A tropical climbing plant with large split or perforated leaves.",
+    "fun_facts": [
+      "Leaf holes are called fenestrations.",
+      "It climbs trees in tropical forests."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Monstera contains irritating calcium oxalate crystals.",
+    "origin": "Tropical climbing vine",
+    "habitat": "Tropical forests, indoor containers, greenhouses, and shaded gardens.",
+    "regions": ["Central America", "Tropical regions", "Cultivated worldwide"],
+    "similar_species": ["Split-leaf philodendron", "Pothos", "Rhaphidophora tetrasperma"],
+    "prompt_terms": ["split leaves", "holes in leaves", "tropical vine"]
+  },
+  {
+    "id": "tomato",
+    "common_name": "Tomato",
+    "scientific_name": "Solanum lycopersicum",
+    "category": "fruit",
+    "summary": "A soft round fruit that grows on a leafy vine-like plant.",
+    "fun_facts": [
+      "Tomatoes are botanically fruits.",
+      "Cultivars range from tiny currant tomatoes to large beefsteaks."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Tomato foliage and unripe parts can contain irritating compounds.",
+    "origin": "Tomato plant",
+    "habitat": "Gardens, farms, containers, and greenhouses.",
+    "regions": ["South American origin", "Cultivated worldwide"],
+    "similar_species": ["Nightshade berries", "Ground cherry", "Tomatillo"],
+    "prompt_terms": ["red fruit", "tomato vine", "green calyx"]
+  },
+  {
+    "id": "acorn",
+    "common_name": "Acorn",
+    "scientific_name": "Quercus species",
+    "category": "seed",
+    "summary": "The nut-like seed of an oak tree, usually held in a small cap.",
+    "fun_facts": [
+      "Acorns are an important food source for wildlife.",
+      "The cap shape can help identify the oak group."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Acorns contain tannins and may irritate people or animals.",
+    "origin": "Oak tree",
+    "habitat": "Oak forests, parks, yards, and woodland edges.",
+    "regions": ["Northern Hemisphere", "Temperate regions"],
+    "similar_species": ["Chestnut", "Hazelnut", "Buckeye"],
+    "prompt_terms": ["oak seed", "brown nut", "acorn cap"]
+  },
+  {
+    "id": "clover",
+    "common_name": "White clover",
+    "scientific_name": "Trifolium repens",
+    "category": "plant",
+    "summary": "A creeping plant with three-part leaves and rounded white flower heads.",
+    "fun_facts": [
+      "Clover can fix nitrogen through root bacteria.",
+      "Four-leaf forms are uncommon mutations."
+    ],
+    "toxicity_note": "Do not consume based on AI identification. Plants from lawns or fields may carry chemicals or contaminants.",
+    "origin": "White clover plant",
+    "habitat": "Lawns, pastures, meadows, roadsides, and open disturbed soil.",
+    "regions": ["Europe origin", "North America", "Temperate regions worldwide"],
+    "similar_species": ["Wood sorrel", "Black medic", "Red clover"],
+    "prompt_terms": ["three leaves", "clover leaf", "white flower head"]
+  }
+]
+
