@@ -10,7 +10,6 @@ Live app: https://floravisionai.streamlit.app/
 - Language: Python
 - Database: SQLite
 - AI: Open-source OpenAI CLIP model, `openai/clip-vit-base-patch32`, through Hugging Face Transformers
-- Deployment choice from the prompt: Streamlit, not Render
 
 Whisper is an open-source OpenAI model, but it is for speech recognition. This project uses CLIP instead because the task is image identification.
 
